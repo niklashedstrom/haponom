@@ -7,12 +7,13 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/BPM"
         android:layout_width="153dp"
         android:layout_height="178dp"
         android:layout_marginStart="129dp"
         android:layout_marginLeft="129dp"
         android:layout_marginTop="90dp"
+        android:onClick="proximity"
         android:text="120"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
