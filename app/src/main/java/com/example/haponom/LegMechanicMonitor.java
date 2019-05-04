@@ -16,6 +16,7 @@ public class LegMechanicMonitor {
 
     public synchronized void incStep(){
         nbrSteps++;
+        System.out.println("Steps: " + nbrSteps);
     }
 
     public synchronized int getSteps(){
