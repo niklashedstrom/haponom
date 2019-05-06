@@ -54,6 +54,7 @@
         android:cropToPadding="false"
         android:scaleType="centerInside"
         android:src="@drawable/vibration"
+        android:onClick="setToVibration"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,6 +68,7 @@
         android:scaleType="fitStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:onClick="setToLight"
         app:srcCompat="@drawable/light" />
 
     <ImageButton
@@ -79,6 +81,7 @@
         android:scaleType="fitStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:onClick="setToSound"
         app:srcCompat="@drawable/sound" />
 
     <Button

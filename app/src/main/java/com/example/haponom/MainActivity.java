@@ -1,6 +1,7 @@
 package com.example.haponom;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,11 +9,14 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.view.View;
 
 import android.view.View;
 
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,6 +31,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     Button incButton;
     Button decButton;
     int bpm;
+    TextView ProximitySensor;
+    SensorManager mySensorManager;
+    Sensor myProximitySensor;
+
+    enum Choice {
+        VIBRATION,
+        LIGHT,
+        SOUND
+    }
+    Choice myChoice;
 
     //compass parts begin ---------------------------------------------
     int deg;
@@ -51,13 +65,38 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         decButton = (Button) findViewById(R.id.dec);
         bpm = 100;
         bpmButton.setText(Integer.toString(bpm));
+        myChoice = Choice.VIBRATION;
 
 
         //compass parts begin ----------------------------------------------
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         //compass parts end ---------------------------------------------
 
+        // poximity part begin --------------------------------------------
+        ProximitySensor = (TextView) findViewById(R.id.proximitySensor);
+
+        mySensorManager = (SensorManager) getSystemService(
+                Context.SENSOR_SERVICE);
+        myProximitySensor = mySensorManager.getDefaultSensor(
+                Sensor.TYPE_PROXIMITY);
+        if (myProximitySensor == null) {
+            ProximitySensor.setText("No Proximity Sensor!");
+        } else {
+            mySensorManager.registerListener(this,
+                    myProximitySensor,
+                    SensorManager.SENSOR_DELAY_NORMAL);
+        }
+        // poximity part end --------------------------------------------
     }
+
+
+    public void setToVibration(View view){ myChoice = Choice.VIBRATION; }
+
+    public void setToLight(View view){ myChoice = Choice.LIGHT; }
+
+    public void setToSound(View view){ myChoice = Choice.SOUND; }
+
+
 
     public void increase(View view){
         bpm++;
@@ -115,13 +154,40 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         System.out.println(deg);
         System.out.println(pastDeg);
-        if(pastDeg != 0){
+        if (pastDeg != 0) {
             int diff = deg - pastDeg;
             bpm += diff;
             bpmButton.setText(Integer.toString(bpm));
 
         }
         pastDeg = deg;
+
+
+        if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+            if (event.values[0] == 0) {
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+                CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+
+                try {
+                    String cameraId = cameraManager.getCameraIdList()[0];
+                    //cameraManager.setTorchMode(cameraId, true);
+                } catch (CameraAccessException e) {
+                }
+
+            } else {
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+
+                try {
+                    String cameraId = cameraManager.getCameraIdList()[0];
+                    //cameraManager.setTorchMode(cameraId, false);
+                } catch (CameraAccessException e) {
+                }
+
+            }
+        }
     }
 
     @Override
