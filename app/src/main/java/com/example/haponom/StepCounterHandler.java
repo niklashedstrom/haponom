@@ -15,15 +15,13 @@ public class StepCounterHandler extends Thread {
                 try {
                     if(lma.startLeg()) {
                         int startSteps = lma.getSteps();
-                        Thread.sleep(15000);
+                        Thread.sleep(10000);
                         int resSteps = lma.getSteps() - startSteps;
-                        lma.setBPM(resSteps * 4);
-                        metronome.setBPM(resSteps * 4);
-                        System.out.println("BPM SET");
+                        int bpm = resSteps * 6;
+                        lma.setBPM(bpm);
+                        metronome.setBPM(bpm);
                         metronome.setBool();
-                        System.out.println("BOOL SET");
                         metronome.start();
-                        System.out.println("METROOOO");
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();

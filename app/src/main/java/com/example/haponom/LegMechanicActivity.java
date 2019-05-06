@@ -30,6 +30,7 @@ public class LegMechanicActivity extends AppCompatActivity implements SensorEven
         setContentView(R.layout.activity_leg_mechanic_activity);
 
         vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         stepdetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
         sensorManager.registerListener(this, stepdetector, SensorManager.SENSOR_DELAY_NORMAL);

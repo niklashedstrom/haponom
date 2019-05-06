@@ -28,9 +28,8 @@ class MetronomeMonitor {
     }
 
     public synchronized long sleeptime(){
-        double hits = bpm / 60; //kanske ej funkar
+        double hits = (double) bpm / 60;
         double res = (1000 - (hits * vibtime())) / hits;
-        System.out.println("Sleep: " + res);
         return (long) res;
     }
 
