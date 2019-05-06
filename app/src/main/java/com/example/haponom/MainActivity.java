@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //compass parts begin ---------------------------------------------
     int deg;
-    int pastdeg = 0;
+    int pastDeg = 0;
     private SensorManager mSensorManager;
     private Sensor mRotationV, mAccelerometer, mMagnetometer;
     boolean haveSensor = false, haveSensor2 = false;
@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             start();
         }else{
             stop();
+            pastDeg = 0;
         }
     }
 
@@ -113,13 +114,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         System.out.println(deg);
-        if(pastdeg != 0){
-            int diff = deg - pastdeg;
+        System.out.println(pastDeg);
+        if(pastDeg != 0){
+            int diff = deg - pastDeg;
             bpm += diff;
             bpmButton.setText(Integer.toString(bpm));
 
         }
-        pastdeg = deg;
+        pastDeg = deg;
     }
 
     @Override
