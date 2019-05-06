@@ -14,12 +14,12 @@
         android:layout_marginLeft="129dp"
         android:layout_marginTop="90dp"
         android:onClick="proximity"
-        android:text="120"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/dec"
         android:layout_width="wrap_content"
         android:layout_height="178dp"
         android:layout_marginStart="16dp"
@@ -27,17 +27,19 @@
         android:layout_marginTop="88dp"
         android:layout_marginBottom="465dp"
         android:text="-"
+        android:onClick="decrease"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/inc"
         android:layout_width="wrap_content"
         android:layout_height="178dp"
         android:layout_marginStart="307dp"
         android:layout_marginLeft="307dp"
         android:layout_marginTop="90dp"
         android:text="+"
+        android:onClick="increase"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -90,4 +92,18 @@
         android:text="Leg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="596dp"
+        android:checked="false"
+        android:text="ToggleButton"
+        android:onClick="onToggleButtonClicked"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
