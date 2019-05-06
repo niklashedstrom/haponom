@@ -205,8 +205,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             deg = (int) (Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360) % 360;
         }
 
-        System.out.println(deg);
-        System.out.println(pastDeg);
         if (pastDeg != 0) {
             int diff = deg - pastDeg;
             bpm += diff;

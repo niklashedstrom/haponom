@@ -8,8 +8,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.hardware.TriggerEvent;
-import android.hardware.TriggerEventListener;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -20,20 +18,18 @@ import android.view.View;
 public class LegMechanicActivity extends AppCompatActivity implements SensorEventListener {
 
     public SensorManager sensorManager;
-    public Sensor stepdetector;
+    public Sensor stepDetector;
     private LegMechanicMonitor monitor;
     private StepCounterHandler sch;
     private MetronomeMonitor metronomeMonitor;
     private MetronomeThread metronomeThread;
     private Vibrator vib;
-    private int BPM;
     private SoundPool sound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leg_mechanic_activity);
-        BPM = 100;
 
         vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -47,8 +43,8 @@ public class LegMechanicActivity extends AppCompatActivity implements SensorEven
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        stepdetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-        sensorManager.registerListener(this, stepdetector, SensorManager.SENSOR_DELAY_NORMAL);
+        stepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+        sensorManager.registerListener(this, stepDetector, SensorManager.SENSOR_DELAY_NORMAL);
 
         monitor = new LegMechanicMonitor();
         metronomeMonitor = new MetronomeMonitor();
