@@ -18,6 +18,7 @@ import android.view.View;
 
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     Button bpmButton;
     Button incButton;
     Button decButton;
+    ImageButton vibButton;
+    ImageButton lightButton;
+    ImageButton soundButton;
     int bpm;
     TextView ProximitySensor;
     SensorManager mySensorManager;
@@ -66,13 +70,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         bpm = 100;
         bpmButton.setText(Integer.toString(bpm));
         myChoice = Choice.VIBRATION;
+        vibButton = (ImageButton)findViewById(R.id.vibBtn);
+        lightButton = (ImageButton)findViewById(R.id.lightBtn);
+        soundButton = (ImageButton)findViewById(R.id.soundBtn);
 
 
         //compass parts begin ----------------------------------------------
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         //compass parts end ---------------------------------------------
 
-        // poximity part begin --------------------------------------------
+        // proximity part begin --------------------------------------------
         ProximitySensor = (TextView) findViewById(R.id.proximitySensor);
 
         mySensorManager = (SensorManager) getSystemService(
@@ -86,17 +93,40 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     myProximitySensor,
                     SensorManager.SENSOR_DELAY_NORMAL);
         }
-        // poximity part end --------------------------------------------
+        // proximity part end --------------------------------------------
     }
 
 
-    public void setToVibration(View view){ myChoice = Choice.VIBRATION; }
+    public void setToVibration(View view){
+        myChoice = Choice.VIBRATION;
+        //vibButton.setImageResource(R.drawable.light);
+    }
 
     public void setToLight(View view){ myChoice = Choice.LIGHT; }
 
     public void setToSound(View view){ myChoice = Choice.SOUND; }
 
+    public void startMetronome(View view){
 
+        switch(myChoice){
+
+            case VIBRATION:
+                System.out.println("VIBRATION");
+                break;
+
+            case LIGHT:
+                System.out.println("LIGHT");
+                break;
+
+            case SOUND:
+                System.out.println("SOUND");
+                break;
+
+            default:
+                break;
+        }
+
+    }
 
     public void increase(View view){
         bpm++;
@@ -109,10 +139,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         bpmButton.setText(Integer.toString(bpm));
     }
 
-    public void proximity(View view) {
-        Intent intent = new Intent(this, proxTest.class);
-        startActivity(intent);
-    }
 
     public void onLegClick(View view) {
         Intent intent = new Intent(this, LegMechanicActivity.class);
@@ -162,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
         pastDeg = deg;
 
-
+        // proximity code ------------------------------------------------------------
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
             if (event.values[0] == 0) {
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
@@ -188,12 +214,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             }
         }
+
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
-    }
+    public void onAccuracyChanged(Sensor sensor, int i) { }
 
     public void start() {
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
