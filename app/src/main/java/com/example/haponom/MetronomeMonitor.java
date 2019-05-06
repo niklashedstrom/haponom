@@ -3,6 +3,7 @@ package com.example.haponom;
 class MetronomeMonitor {
     private long bpm = 0;
     private boolean run = false;
+    private MainActivity.Choice choice = MainActivity.Choice.VIBRATION;
 
     public MetronomeMonitor(){
 
@@ -27,15 +28,22 @@ class MetronomeMonitor {
         run = false;
     }
 
-    public synchronized long sleeptime(){
+    public synchronized long sleepTime(){
         double hits = (double) bpm / 60;
-        double res = (1000 - (hits * vibtime())) / hits;
+        double res = (1000 - (hits * vibTime())) / hits;
         return (long) res;
     }
 
-    public synchronized long vibtime(){
+    public synchronized long vibTime(){
         return 100;
     }
 
+    public synchronized MainActivity.Choice getChoice(){
+        return choice;
+    }
+
+    public synchronized void setChoice(MainActivity.Choice choice){
+        this.choice = choice;
+    }
 
 }

@@ -11,7 +11,11 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 
 import android.view.View;
@@ -38,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     TextView ProximitySensor;
     SensorManager mySensorManager;
     Sensor myProximitySensor;
+    MetronomeMonitor metronomeMonitor;
+    boolean flag = false;
+    CameraManager cameraManager;
 
     enum Choice {
         VIBRATION,
@@ -94,6 +101,30 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     SensorManager.SENSOR_DELAY_NORMAL);
         }
         // proximity part end --------------------------------------------
+
+        //Vibrator
+        Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        //Sound
+        AudioAttributes attributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+        SoundPool sound = new SoundPool.Builder()
+                .setAudioAttributes(attributes)
+                .build();
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+        //Flashlight
+        cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+
+        //Metronome monitor
+        metronomeMonitor = new MetronomeMonitor();
+        metronomeMonitor.setChoice(myChoice);
+        metronomeMonitor.setBPM(bpm);
+
+        MetronomeThread metronomeThread = new MetronomeThread(metronomeMonitor, vib, sound, cameraManager, this);
+        metronomeThread.start();
     }
 
 
@@ -107,36 +138,32 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void setToSound(View view){ myChoice = Choice.SOUND; }
 
     public void startMetronome(View view){
-
-        switch(myChoice){
-
-            case VIBRATION:
-                System.out.println("VIBRATION");
-                break;
-
-            case LIGHT:
-                System.out.println("LIGHT");
-                break;
-
-            case SOUND:
-                System.out.println("SOUND");
-                break;
-
-            default:
-                break;
+        if(flag){
+            flag = false;
+        } else {
+            flag = true;
         }
 
+        if(flag) {
+            metronomeMonitor.setChoice(myChoice);
+            metronomeMonitor.setBool();
+            metronomeMonitor.start();
+        } else {
+            metronomeMonitor.stop();
+        }
     }
 
     public void increase(View view){
         bpm++;
         bpmButton.setText(Integer.toString(bpm));
+        metronomeMonitor.setBPM(bpm);
 
     }
 
     public void decrease(View view){
         bpm--;
         bpmButton.setText(Integer.toString(bpm));
+        metronomeMonitor.setBPM(bpm);
     }
 
 
@@ -184,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             int diff = deg - pastDeg;
             bpm += diff;
             bpmButton.setText(Integer.toString(bpm));
+            metronomeMonitor.setBPM(bpm);
 
         }
         pastDeg = deg;
@@ -193,9 +221,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             if (event.values[0] == 0) {
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                         WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-
-                CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-
                 try {
                     String cameraId = cameraManager.getCameraIdList()[0];
                     //cameraManager.setTorchMode(cameraId, true);

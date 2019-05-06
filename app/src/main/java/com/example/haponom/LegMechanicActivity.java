@@ -10,6 +10,9 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.hardware.TriggerEvent;
 import android.hardware.TriggerEventListener;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
@@ -24,6 +27,7 @@ public class LegMechanicActivity extends AppCompatActivity implements SensorEven
     private MetronomeThread metronomeThread;
     private Vibrator vib;
     private int BPM;
+    private SoundPool sound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,15 @@ public class LegMechanicActivity extends AppCompatActivity implements SensorEven
         BPM = 100;
 
         vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        AudioAttributes attributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+        sound = new SoundPool.Builder()
+                .setAudioAttributes(attributes)
+                .build();
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         stepdetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
