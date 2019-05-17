@@ -15,6 +15,7 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
+import android.widget.TextView;
 
 public class LegMechanicActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -26,11 +27,18 @@ public class LegMechanicActivity extends AppCompatActivity implements SensorEven
     private MetronomeThread metronomeThread;
     private Vibrator vib;
     private SoundPool sound;
+    private CountdownThread countdownThread;
+    public static TextView countdown;
+    public static TextView bpmOnScreen;
+    private int count = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leg_mechanic_activity);
+
+        countdown = findViewById(R.id.countdown);
+        bpmOnScreen = findViewById(R.id.bpmOnScreen);
 
         vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -53,16 +61,17 @@ public class LegMechanicActivity extends AppCompatActivity implements SensorEven
         monitor = new LegMechanicMonitor();
         metronomeMonitor = new MetronomeMonitor();
 
-        sch = new StepCounterHandler(monitor, metronomeMonitor);
+        sch = new StepCounterHandler(monitor, metronomeMonitor, this);
         metronomeThread = new MetronomeThread(metronomeMonitor, vib, sound, cameraManager, this);
+        countdownThread = new CountdownThread(monitor, this);
         sch.start();
         metronomeThread.start();
+        countdownThread.start();
     }
 
     public void backToMain(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-
     }
 
     public void startLegButton(View view){

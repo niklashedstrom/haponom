@@ -130,12 +130,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     public void setToVibration(View view){
         myChoice = Choice.VIBRATION;
+        metronomeMonitor.setChoice(myChoice);
         //vibButton.setImageResource(R.drawable.light);
     }
 
-    public void setToLight(View view){ myChoice = Choice.LIGHT; }
+    public void setToLight(View view){
+        myChoice = Choice.LIGHT;
+        metronomeMonitor.setChoice(myChoice);
+    }
 
-    public void setToSound(View view){ myChoice = Choice.SOUND; }
+    public void setToSound(View view){
+        myChoice = Choice.SOUND;
+        metronomeMonitor.setChoice(myChoice);
+    }
 
     public void startMetronome(View view){
         if(flag){

@@ -27,7 +27,7 @@ public class MetronomeThread extends Thread {
         tick = sound.load(context, R.raw.tick, 1);
         tock = sound.load(context, R.raw.tock, 1);
     }
-    
+
     public void run(){
         while(true){
             try {
