@@ -58,12 +58,16 @@ public class LegMechanicActivity extends AppCompatActivity implements SensorEven
         stepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
         sensorManager.registerListener(this, stepDetector, SensorManager.SENSOR_DELAY_NORMAL);
 
+        CameraManager cm = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+
         monitor = new LegMechanicMonitor();
         metronomeMonitor = new MetronomeMonitor();
+
 
         sch = new StepCounterHandler(monitor, metronomeMonitor, this);
         metronomeThread = new MetronomeThread(metronomeMonitor, vib, sound, cameraManager, this);
         countdownThread = new CountdownThread(monitor, this);
+
         sch.start();
         metronomeThread.start();
         countdownThread.start();

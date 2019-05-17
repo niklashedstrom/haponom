@@ -96,17 +96,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ToggleButton
-        android:id="@+id/toggleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:id="@+id/compassButton"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:checked="false"
-        android:onClick="onToggleButtonClicked"
-        android:text="ToggleButton"
+        android:onClick="onCompassClicked"
+        android:scaleType="fitStart"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/sound" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

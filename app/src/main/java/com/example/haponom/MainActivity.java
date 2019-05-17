@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     ImageButton vibButton;
     ImageButton lightButton;
     ImageButton soundButton;
+    ImageButton compassButton;
     int bpm;
     TextView ProximitySensor;
     SensorManager mySensorManager;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     MetronomeMonitor metronomeMonitor;
     boolean flag = false;
     CameraManager cameraManager;
-
+    boolean compassChecked = false;
     enum Choice {
         VIBRATION,
         LIGHT,
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         vibButton = (ImageButton)findViewById(R.id.vibBtn);
         lightButton = (ImageButton)findViewById(R.id.lightBtn);
         soundButton = (ImageButton)findViewById(R.id.soundBtn);
+        compassButton = (ImageButton)findViewById(R.id.compassButton);
 
 
         //compass parts begin ----------------------------------------------
@@ -180,6 +182,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     //compass parts begin ----------------------------------------------
+    public void onCompassClicked(View view){
+        if (!compassChecked){
+            compassChecked = true;
+            compassButton.setImageResource(R.drawable.light);
+            start();
+
+        }else{
+            compassChecked = false;
+            stop();
+            pastDeg = 0;
+            compassButton.setImageResource(R.drawable.sound);
+        }
+    }
+
+
     public void onToggleButtonClicked(View v) {
         //Check, is the toggle is on?
         boolean on = ((ToggleButton) v).isChecked();
@@ -226,6 +243,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             if (event.values[0] == 0) {
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                         WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                        metronomeMonitor.setChoice(Choice.LIGHT);
                 try {
                     String cameraId = cameraManager.getCameraIdList()[0];
                     //cameraManager.setTorchMode(cameraId, true);
@@ -235,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             } else {
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+                metronomeMonitor.setChoice(myChoice);
 
                 try {
                     String cameraId = cameraManager.getCameraIdList()[0];
