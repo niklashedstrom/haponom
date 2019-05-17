@@ -8,6 +8,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.hardware.camera2.CameraManager;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -46,11 +47,13 @@ public class LegMechanicActivity extends AppCompatActivity implements SensorEven
         stepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
         sensorManager.registerListener(this, stepDetector, SensorManager.SENSOR_DELAY_NORMAL);
 
+        CameraManager cm = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+
         monitor = new LegMechanicMonitor();
         metronomeMonitor = new MetronomeMonitor();
 
         sch = new StepCounterHandler(monitor, metronomeMonitor);
-        metronomeThread = new MetronomeThread(metronomeMonitor, vib);
+        metronomeThread = new MetronomeThread(metronomeMonitor, vib, sound, cm, this);
         sch.start();
         metronomeThread.start();
     }

@@ -28,10 +28,6 @@ public class MetronomeThread extends Thread {
         tock = sound.load(context, R.raw.tock, 1);
     }
 
-    public MetronomeThread(MetronomeMonitor mm, Vibrator vib){
-        this.mm = mm;
-        this.vib = vib;
-    }
 
     public void run(){
         while(true){

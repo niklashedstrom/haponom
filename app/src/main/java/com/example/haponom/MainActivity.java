@@ -130,12 +130,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     public void setToVibration(View view){
         myChoice = Choice.VIBRATION;
+        metronomeMonitor.setChoice(myChoice);
         //vibButton.setImageResource(R.drawable.light);
     }
 
-    public void setToLight(View view){ myChoice = Choice.LIGHT; }
+    public void setToLight(View view){
+        myChoice = Choice.LIGHT;
+        metronomeMonitor.setChoice(myChoice);
 
-    public void setToSound(View view){ myChoice = Choice.SOUND; }
+    }
+
+    public void setToSound(View view){
+        myChoice = Choice.SOUND;
+        metronomeMonitor.setChoice(myChoice); }
 
     public void startMetronome(View view){
         if(flag){
@@ -219,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             if (event.values[0] == 0) {
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                         WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                        metronomeMonitor.setChoice(Choice.LIGHT);
                 try {
                     String cameraId = cameraManager.getCameraIdList()[0];
                     //cameraManager.setTorchMode(cameraId, true);
@@ -228,6 +236,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             } else {
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+                metronomeMonitor.setChoice(myChoice);
 
                 try {
                     String cameraId = cameraManager.getCameraIdList()[0];
