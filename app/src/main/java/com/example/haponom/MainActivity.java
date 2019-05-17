@@ -22,6 +22,7 @@ import android.view.View;
 
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,16 +30,22 @@ import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
-    Button bpmButton;
+    ImageView bpmButton;
     Button incButton;
     Button decButton;
-    ImageButton vibButton;
-    ImageButton lightButton;
-    ImageButton soundButton;
-    ImageButton compassButton;
+    ImageView vibButton;
+    ImageView lightButton;
+    ImageView soundButton;
+    ImageView compassButton;
+    ImageView legView;
+    TextView BPMText;
+    ConstraintLayout cl;
+
     int bpm;
     TextView ProximitySensor;
     SensorManager mySensorManager;
@@ -72,16 +79,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bpmButton = (Button) findViewById(R.id.BPM);
+        bpmButton = findViewById(R.id.BPM);
         incButton = (Button) findViewById(R.id.inc);
         decButton = (Button) findViewById(R.id.dec);
+        cl = findViewById(R.id.layout);
         bpm = 100;
-        bpmButton.setText(Integer.toString(bpm));
+        BPMText = findViewById(R.id.textView);
+        BPMText.setText(Integer.toString(bpm));
+        //bpmButton.setText(Integer.toString(bpm));
         myChoice = Choice.VIBRATION;
-        vibButton = (ImageButton)findViewById(R.id.vibBtn);
-        lightButton = (ImageButton)findViewById(R.id.lightBtn);
-        soundButton = (ImageButton)findViewById(R.id.soundBtn);
-        compassButton = (ImageButton)findViewById(R.id.compassButton);
+        vibButton = findViewById(R.id.vibBtn);
+        lightButton = findViewById(R.id.lightBtn);
+        soundButton = findViewById(R.id.soundBtn);
+        compassButton = findViewById(R.id.compassButton);
+        legView = findViewById(R.id.leg);
+
+
+
 
 
         //compass parts begin ----------------------------------------------
@@ -130,21 +144,33 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
 
-    public void setToVibration(View view){
+    public void setToVibration(View v){
         myChoice = Choice.VIBRATION;
         metronomeMonitor.setChoice(myChoice);
+
+        vibButton.setImageResource(R.drawable.vibration2);
+        lightButton.setImageResource(R.drawable.nolight);
+        soundButton.setImageResource(R.drawable.nosound);
+
         //vibButton.setImageResource(R.drawable.light);
     }
 
     public void setToLight(View view){
         myChoice = Choice.LIGHT;
         metronomeMonitor.setChoice(myChoice);
+        vibButton.setImageResource(R.drawable.novibration);
+        lightButton.setImageResource(R.drawable.light2);
+        soundButton.setImageResource(R.drawable.nosound);
 
     }
 
     public void setToSound(View view){
         myChoice = Choice.SOUND;
         metronomeMonitor.setChoice(myChoice);
+        vibButton.setImageResource(R.drawable.novibration);
+        lightButton.setImageResource(R.drawable.nolight);
+        soundButton.setImageResource(R.drawable.sound2);
+
 
     }
 
@@ -156,24 +182,26 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         if(flag) {
+            bpmButton.setImageResource(R.drawable.knobon);
             metronomeMonitor.setChoice(myChoice);
             metronomeMonitor.setBool();
             metronomeMonitor.start();
         } else {
+            bpmButton.setImageResource(R.drawable.knoboff);
             metronomeMonitor.stop();
         }
     }
 
     public void increase(View view){
         bpm++;
-        bpmButton.setText(Integer.toString(bpm));
+        BPMText.setText(Integer.toString(bpm));
         metronomeMonitor.setBPM(bpm);
 
     }
 
     public void decrease(View view){
         bpm--;
-        bpmButton.setText(Integer.toString(bpm));
+        BPMText.setText(Integer.toString(bpm));
         metronomeMonitor.setBPM(bpm);
     }
 
@@ -185,16 +213,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //compass parts begin ----------------------------------------------
     public void onCompassClicked(View view){
+
         if (!compassChecked){
+            //cl.setAlpha(0.1f);
             compassChecked = true;
-            compassButton.setImageResource(R.drawable.light);
+            //compassButton.setImageResource(R.drawable.light);
             start();
 
         }else{
+            //cl.setAlpha(1.0f);
             compassChecked = false;
             stop();
             pastDeg = 0;
-            compassButton.setImageResource(R.drawable.sound);
+            //compassButton.setImageResource(R.drawable.sound);
         }
     }
 
@@ -234,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (pastDeg != 0) {
             int diff = deg - pastDeg;
             bpm += diff;
-            bpmButton.setText(Integer.toString(bpm));
+            BPMText.setText(Integer.toString(bpm));
             metronomeMonitor.setBPM(bpm);
 
         }

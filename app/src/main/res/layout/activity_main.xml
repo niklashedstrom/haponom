@@ -2,111 +2,118 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#4f4c4c"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/BPM"
-        android:layout_width="153dp"
-        android:layout_height="178dp"
-        android:layout_marginStart="129dp"
-        android:layout_marginLeft="129dp"
-        android:layout_marginTop="90dp"
-        android:onClick="startMetronome"
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/BPM"
+            android:layout_width="153dp"
+            android:layout_height="178dp"
+            android:layout_marginStart="129dp"
+            android:layout_marginLeft="129dp"
+            android:layout_marginTop="90dp"
+            android:onClick="startMetronome"
+            android:src="@drawable/knoboff"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/dec"
-        android:layout_width="wrap_content"
-        android:layout_height="178dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginBottom="465dp"
-        android:text="-"
-        android:onClick="decrease"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/dec"
+            android:layout_width="wrap_content"
+            android:layout_height="178dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="88dp"
+            android:layout_marginBottom="465dp"
+            android:onClick="decrease"
+            android:text="-"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/inc"
-        android:layout_width="wrap_content"
-        android:layout_height="178dp"
-        android:layout_marginStart="307dp"
-        android:layout_marginLeft="307dp"
-        android:layout_marginTop="90dp"
-        android:text="+"
-        android:onClick="increase"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/inc"
+            android:layout_width="wrap_content"
+            android:layout_height="178dp"
+            android:layout_marginStart="307dp"
+            android:layout_marginLeft="307dp"
+            android:layout_marginTop="90dp"
+            android:onClick="increase"
+            android:text="+"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/vibBtn"
-        android:layout_width="77dp"
-        android:layout_height="77dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="326dp"
-        android:adjustViewBounds="true"
-        android:cropToPadding="false"
-        android:scaleType="centerInside"
-        android:src="@drawable/vibration"
-        android:onClick="setToVibration"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/vibBtn"
+            android:layout_width="77dp"
+            android:layout_height="77dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="326dp"
+            android:adjustViewBounds="true"
+            android:cropToPadding="false"
+            android:onClick="setToVibration"
+            android:src="@drawable/vibration2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/lightBtn"
-        android:layout_width="77dp"
-        android:layout_height="77dp"
-        android:layout_marginStart="176dp"
-        android:layout_marginLeft="176dp"
-        android:layout_marginTop="324dp"
-        android:scaleType="fitStart"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:onClick="setToLight"
-        app:srcCompat="@drawable/light" />
+        <ImageView
+            android:id="@+id/lightBtn"
+            android:layout_width="77dp"
+            android:layout_height="77dp"
+            android:layout_marginStart="170dp"
+            android:layout_marginTop="324dp"
+            android:onClick="setToLight"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/nolight" />
 
-    <ImageButton
-        android:id="@+id/soundBtn"
-        android:layout_width="77dp"
-        android:layout_height="77dp"
-        android:layout_marginStart="316dp"
-        android:layout_marginLeft="316dp"
-        android:layout_marginTop="324dp"
-        android:scaleType="fitStart"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:onClick="setToSound"
-        app:srcCompat="@drawable/sound" />
+        <ImageView
+            android:id="@+id/soundBtn"
+            android:layout_width="77dp"
+            android:layout_height="77dp"
+            android:layout_marginStart="316dp"
+            android:layout_marginLeft="316dp"
+            android:layout_marginTop="324dp"
+            android:onClick="setToSound"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/nosound" />
 
-    <Button
-        android:id="@+id/leg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:onClick="onLegClick"
-        android:text="Leg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <ImageView
+            android:id="@+id/leg"
+            android:layout_width="190dp"
+            android:layout_height="83dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:onClick="onLegClick"
+            android:text="Leg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/pocket" />
 
-    <ImageButton
-        android:id="@+id/compassButton"
-        android:layout_width="77dp"
-        android:layout_height="77dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:onClick="onCompassClicked"
-        android:scaleType="fitStart"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/sound" />
+        <ImageView
+            android:id="@+id/compassButton"
+            android:layout_width="190dp"
+            android:layout_height="83dp"
+            android:layout_marginBottom="8dp"
+            android:onClick="onCompassClicked"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/rotate" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="31dp"
+            android:layout_height="21dp"
+            android:layout_marginStart="194dp"
+            android:layout_marginTop="170dp"
+            android:text="100"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
