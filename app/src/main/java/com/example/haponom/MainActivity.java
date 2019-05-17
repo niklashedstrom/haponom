@@ -158,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void setToLight(View view){
         myChoice = Choice.LIGHT;
         metronomeMonitor.setChoice(myChoice);
+
         vibButton.setImageResource(R.drawable.novibration);
         lightButton.setImageResource(R.drawable.light2);
         soundButton.setImageResource(R.drawable.nosound);
@@ -167,10 +168,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void setToSound(View view){
         myChoice = Choice.SOUND;
         metronomeMonitor.setChoice(myChoice);
+
         vibButton.setImageResource(R.drawable.novibration);
         lightButton.setImageResource(R.drawable.nolight);
         soundButton.setImageResource(R.drawable.sound2);
-
 
     }
 
