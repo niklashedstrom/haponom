@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //compass parts end ---------------------------------------------
 
         // proximity part begin --------------------------------------------
-        ProximitySensor = (TextView) findViewById(R.id.proximitySensor);
+        //ProximitySensor = (TextView) findViewById(R.id.proximitySensor);
 
         mySensorManager = (SensorManager) getSystemService(
                 Context.SENSOR_SERVICE);
@@ -231,7 +231,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //compassButton.setImageResource(R.drawable.sound);
         }
     }
-
+    public void onClickQuestion(View view) {
+        Intent intent = new Intent(this, proxTest.class);
+        startActivity(intent);
+    }
 
     public void onToggleButtonClicked(View v) {
         //Check, is the toggle is on?
@@ -244,6 +247,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             pastDeg = 0;
         }
     }
+
+
 
     @Override
     public void onSensorChanged(SensorEvent event) {
