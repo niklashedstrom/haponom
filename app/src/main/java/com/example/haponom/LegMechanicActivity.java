@@ -74,6 +74,7 @@ public class LegMechanicActivity extends AppCompatActivity implements SensorEven
     }
 
     public void backToMain(View view){
+        metronomeThread.interrupt();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
