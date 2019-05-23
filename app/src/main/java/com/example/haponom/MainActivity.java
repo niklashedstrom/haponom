@@ -351,11 +351,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+
 //compass parts end ---------------------------------------------
 
-
     public void pocketModeButton(View view){
-
+        legMechanicMonitor.press();
     }
 
 }
