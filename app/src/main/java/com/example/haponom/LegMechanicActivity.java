@@ -30,7 +30,6 @@ public class LegMechanicActivity extends AppCompatActivity implements SensorEven
     private CountdownThread countdownThread;
     public static TextView countdown;
     public static TextView bpmOnScreen;
-    private int count = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +73,7 @@ public class LegMechanicActivity extends AppCompatActivity implements SensorEven
     }
 
     public void backToMain(View view){
+        metronomeThread.interrupt();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

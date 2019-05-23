@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     SensorManager mySensorManager;
     Sensor myProximitySensor;
     MetronomeMonitor metronomeMonitor;
+    LegMechanicMonitor legMechanicMonitor;
     boolean flag = false;
     CameraManager cameraManager;
     boolean compassChecked = false;
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         bpm = 100;
         BPMText = findViewById(R.id.textView);
         BPMText.setText(Integer.toString(bpm));
-        //bpmButton.setText(Integer.toString(bpm));
         myChoice = Choice.VIBRATION;
         vibButton = findViewById(R.id.vibBtn);
         lightButton = findViewById(R.id.lightBtn);
@@ -138,6 +138,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         metronomeMonitor = new MetronomeMonitor();
         metronomeMonitor.setChoice(myChoice);
         metronomeMonitor.setBPM(bpm);
+
+        legMechanicMonitor = new LegMechanicMonitor();
 
         MetronomeThread metronomeThread = new MetronomeThread(metronomeMonitor, vib, sound, cameraManager, this);
         metronomeThread.start();
@@ -345,5 +347,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
 //compass parts end ---------------------------------------------
+
+
+    public void pocketModeButton(View view){
+
+    }
 
 }
