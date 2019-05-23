@@ -5,7 +5,7 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4f4c4c"
+    android:background="#000000"
     tools:context=".MainActivity">
 
 
@@ -20,7 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <ImageView
             android:id="@+id/dec"
             android:layout_width="wrap_content"
             android:layout_height="178dp"
@@ -29,11 +29,11 @@
             android:layout_marginTop="88dp"
             android:layout_marginBottom="465dp"
             android:onClick="decrease"
-            android:text="-"
+            android:src="@drawable/minus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <ImageView
             android:id="@+id/inc"
             android:layout_width="wrap_content"
             android:layout_height="178dp"
@@ -41,7 +41,7 @@
             android:layout_marginLeft="307dp"
             android:layout_marginTop="90dp"
             android:onClick="increase"
-            android:text="+"
+            android:src="@drawable/plus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -106,10 +106,10 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="31dp"
-            android:layout_height="21dp"
-            android:layout_marginStart="194dp"
-            android:layout_marginTop="170dp"
+            android:layout_width="49dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="188dp"
+            android:layout_marginTop="212dp"
             android:text="100"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -36,8 +36,8 @@ import androidx.core.content.ContextCompat;
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     ImageView bpmButton;
-    Button incButton;
-    Button decButton;
+    ImageView incButton;
+    ImageView decButton;
     ImageView vibButton;
     ImageView lightButton;
     ImageView soundButton;
@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bpmButton = findViewById(R.id.BPM);
-        incButton = (Button) findViewById(R.id.inc);
-        decButton = (Button) findViewById(R.id.dec);
+        incButton = findViewById(R.id.inc);
+        decButton = findViewById(R.id.dec);
         cl = findViewById(R.id.layout);
         bpm = 100;
         BPMText = findViewById(R.id.textView);
@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (!compassChecked){
             //cl.setAlpha(0.1f);
             compassChecked = true;
-            //compassButton.setImageResource(R.drawable.light);
+            compassButton.setImageResource(R.drawable.rotate_highlight);
             start();
 
         }else{
@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             compassChecked = false;
             stop();
             pastDeg = 0;
-            //compassButton.setImageResource(R.drawable.sound);
+            compassButton.setImageResource(R.drawable.rotate);
         }
     }
     public void onClickQuestion(View view) {
