@@ -17,8 +17,6 @@
 
         <activity android:name=".LegMechanicActivity"></activity>
 
-        <activity android:name=".proxTest"></activity>
-
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>

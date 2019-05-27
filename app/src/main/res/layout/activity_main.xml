@@ -5,129 +5,160 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@drawable/bg"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/bpmCircle"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/circle" />
 
-        <ImageView
-            android:id="@+id/BPM"
-            android:layout_width="153dp"
-            android:layout_height="178dp"
-            android:layout_marginStart="128dp"
-            android:layout_marginTop="176dp"
-            android:onClick="startMetronome"
-            android:src="@drawable/knoboff"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/playpause"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="startMetronome"
+        app:layout_constraintBottom_toBottomOf="@+id/bpmCircle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bpmCircle"
+        app:srcCompat="@drawable/play" />
 
-        <ImageView
-            android:id="@+id/dec"
-            android:layout_width="wrap_content"
-            android:layout_height="178dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="88dp"
-            android:layout_marginBottom="465dp"
-            android:onClick="decrease"
-            android:src="@drawable/minus"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/inc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="32dp"
+        android:onClick="increase"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/plus_blue" />
 
-        <ImageView
-            android:id="@+id/inc"
-            android:layout_width="wrap_content"
-            android:layout_height="178dp"
-            android:layout_marginStart="307dp"
-            android:layout_marginLeft="307dp"
-            android:layout_marginTop="90dp"
-            android:onClick="increase"
-            android:src="@drawable/plus"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/dec"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="128dp"
+        android:onClick="decrease"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/minus_blue" />
 
-        <ImageView
-            android:id="@+id/vibBtn"
-            android:layout_width="77dp"
-            android:layout_height="77dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="326dp"
-            android:adjustViewBounds="true"
-            android:cropToPadding="false"
-            android:onClick="setToVibration"
-            android:src="@drawable/vibration2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/soundBtn"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="57dp"
+        android:layout_marginBottom="90dp"
+        android:onClick="setToSound"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/navbar_sound" />
 
-        <ImageView
-            android:id="@+id/lightBtn"
-            android:layout_width="77dp"
-            android:layout_height="77dp"
-            android:layout_marginStart="164dp"
-            android:layout_marginTop="380dp"
-            android:onClick="setToLight"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/nolight" />
+    <ImageView
+        android:id="@+id/vibBtn"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="90dp"
+        android:onClick="setToVibration"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/navbar_vib2_activated" />
 
-        <ImageView
-            android:id="@+id/soundBtn"
-            android:layout_width="77dp"
-            android:layout_height="77dp"
-            android:layout_marginStart="316dp"
-            android:layout_marginLeft="316dp"
-            android:layout_marginTop="324dp"
-            android:onClick="setToSound"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/nosound" />
+    <ImageView
+        android:id="@+id/lightBtn"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="90dp"
+        android:onClick="setToLight"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/navbar_torch2" />
 
-        <ImageView
-            android:id="@+id/leg"
-            android:layout_width="190dp"
-            android:layout_height="83dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:onClick="pocketModeButton"
-            android:text="Leg"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/pocket" />
+    <ImageView
+        android:id="@+id/rotateBtn"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="onCompassClicked"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bpmCircle"
+        app:srcCompat="@drawable/rotate_unacti" />
 
-        <ImageView
-            android:id="@+id/compassButton"
-            android:layout_width="190dp"
-            android:layout_height="83dp"
-            android:layout_marginBottom="8dp"
-            android:onClick="onCompassClicked"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/rotate" />
+    <TextView
+        android:id="@+id/bpmText"
+        android:layout_width="87dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="145dp"
+        android:layout_marginEnd="168dp"
+        android:fontFamily="@font/sansbold"
+        android:text="120"
+        android:textColor="#FFFFFF"
+        android:textSize="48sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="49dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="188dp"
-            android:layout_marginTop="212dp"
-            android:text="100"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/arrows"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrows" />
 
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/BPM"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.166"
-            app:srcCompat="@drawable/mclouth"
-            tools:srcCompat="@drawable/mclouth" />
+    <ImageView
+        android:id="@+id/overlay"
+        android:layout_width="526dp"
+        android:layout_height="762dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/overlay" />
+
+    <ImageView
+        android:id="@+id/pocketMode"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="pocketModeButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/pocket_mode" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

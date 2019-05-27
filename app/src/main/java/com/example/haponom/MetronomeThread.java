@@ -40,7 +40,7 @@ public class MetronomeThread extends Thread {
                         case VIBRATION:
                             if(count % 4 == 0){
                                 count = 1;
-                                vib.vibrate(VibrationEffect.createOneShot(mm.vibTime(), 200));
+                                vib.vibrate(VibrationEffect.createOneShot(mm.vibTime(), 255));
                             } else {
                                 count++;
                                 vib.vibrate(VibrationEffect.createOneShot(mm.vibTime(), 100));

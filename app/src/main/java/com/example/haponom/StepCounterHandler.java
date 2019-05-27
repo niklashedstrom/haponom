@@ -4,10 +4,10 @@ package com.example.haponom;
 public class StepCounterHandler extends Thread {
     LegMechanicMonitor lma;
     MetronomeMonitor metronome;
-    LegMechanicActivity activity;
     private int bpm;
+    MainActivity activity;
 
-    public StepCounterHandler(LegMechanicMonitor lma, MetronomeMonitor metronome, LegMechanicActivity activity){
+    public StepCounterHandler(LegMechanicMonitor lma, MetronomeMonitor metronome, MainActivity activity){
         this.lma = lma;
         this.metronome = metronome;
         this.activity = activity;
@@ -17,22 +17,28 @@ public class StepCounterHandler extends Thread {
         while(true){ {
                 try {
                     if(lma.startLeg()) {
-                        System.out.println("Reached...................");
-                        lma.setCountdownBool(true);
+                        Thread.sleep(1500);
                         int startSteps = lma.getSteps();
                         Thread.sleep(10000);
-                        int resSteps = lma.getSteps() - startSteps;
-                        bpm = resSteps * 6;
-                        lma.setBPM(bpm);
-                        metronome.setBPM(bpm);
-                        metronome.setBool();
-                        metronome.start();
+                        final int resSteps = lma.getSteps() - startSteps;
+                        if(resSteps != 0) {
+                            bpm = resSteps * 6;
+                            lma.setBPM(bpm);
+                            metronome.setBPM(bpm);
+                            metronome.setBool();
+                            metronome.start();
+                            activity.bpm = bpm;
+                        }
                         lma.done();
-                        lma.setCountdownBool(false);
+                        System.out.println("BPM: " + bpm);
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                LegMechanicActivity.bpmOnScreen.setText("BPM: " + bpm);
+                                if(resSteps != 0) {
+                                    activity.BPMText.setText(Integer.toString(bpm));
+                                    activity.bpmButton.setImageResource(R.drawable.pause);
+                                    activity.flag = true;
+                                }
                             }
                         });
 

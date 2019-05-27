@@ -1,11 +1,15 @@
+/*
+
+NOT IN USE
+
 package com.example.haponom;
 
 public class CountdownThread extends Thread {
     private LegMechanicMonitor legMechanicMonitor;
     private int count = 10;
-    private  LegMechanicActivity activity;
+    private MainActivity activity;
 
-    public CountdownThread(LegMechanicMonitor legMechanicMonitor, LegMechanicActivity activity){
+    public CountdownThread(LegMechanicMonitor legMechanicMonitor, MainActivity activity){
         this.legMechanicMonitor = legMechanicMonitor;
         this.activity = activity;
     }
@@ -20,7 +24,7 @@ public class CountdownThread extends Thread {
                         if (legMechanicMonitor.getCountdownCool()) {
                             legMechanicMonitor.setCountdown(count);
                             count--;
-                            LegMechanicActivity.countdown.setText(Integer.toString(count));
+                            MainActivity.countdown.setText(Integer.toString(count));
                             if(count == 0) count = 10;
                         }
                     }
@@ -31,3 +35,4 @@ public class CountdownThread extends Thread {
         }
     }
 }
+*/

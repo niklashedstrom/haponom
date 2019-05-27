@@ -1,15 +1,11 @@
 package com.example.haponom;
 
-
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -17,21 +13,11 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
-
-import android.view.View;
-
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -41,25 +27,30 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     ImageView vibButton;
     ImageView lightButton;
     ImageView soundButton;
-    ImageView compassButton;
-    ImageView legView;
-    TextView BPMText;
-    ConstraintLayout cl;
+    ImageView rotateButton;
+    ImageView arrows;
+    ImageView overlay;
+    static TextView BPMText;
+    static TextView countdown;
 
-    int bpm;
-    TextView ProximitySensor;
+    static int bpm;
     SensorManager mySensorManager;
     Sensor myProximitySensor;
+    Sensor stepDetector;
     MetronomeMonitor metronomeMonitor;
     LegMechanicMonitor legMechanicMonitor;
+    StepCounterHandler stepCounterHandler;
     boolean flag = false;
     CameraManager cameraManager;
     boolean compassChecked = false;
+    boolean isClicked = false;
+
     enum Choice {
         VIBRATION,
         LIGHT,
         SOUND
     }
+
     Choice myChoice;
 
     //compass parts begin ---------------------------------------------
@@ -80,43 +71,40 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bpmButton = findViewById(R.id.BPM);
+        bpmButton = findViewById(R.id.playpause);
         incButton = findViewById(R.id.inc);
         decButton = findViewById(R.id.dec);
-        cl = findViewById(R.id.layout);
-        bpm = 100;
-        BPMText = findViewById(R.id.textView);
-        BPMText.setText(Integer.toString(bpm));
+        bpm = 120;
+        BPMText = findViewById(R.id.bpmText);
         myChoice = Choice.VIBRATION;
         vibButton = findViewById(R.id.vibBtn);
         lightButton = findViewById(R.id.lightBtn);
         soundButton = findViewById(R.id.soundBtn);
-        compassButton = findViewById(R.id.compassButton);
-        legView = findViewById(R.id.leg);
-
-
-
-
+        rotateButton = findViewById(R.id.rotateBtn);
+        arrows = findViewById(R.id.arrows);
+        overlay = findViewById(R.id.overlay);
 
         //compass parts begin ----------------------------------------------
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         //compass parts end ---------------------------------------------
 
         // proximity part begin --------------------------------------------
-        //ProximitySensor = (TextView) findViewById(R.id.proximitySensor);
 
         mySensorManager = (SensorManager) getSystemService(
                 Context.SENSOR_SERVICE);
         myProximitySensor = mySensorManager.getDefaultSensor(
                 Sensor.TYPE_PROXIMITY);
         if (myProximitySensor == null) {
-            ProximitySensor.setText("No Proximity Sensor!");
+
         } else {
             mySensorManager.registerListener(this,
                     myProximitySensor,
                     SensorManager.SENSOR_DELAY_NORMAL);
         }
         // proximity part end --------------------------------------------
+
+        stepDetector = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+        mSensorManager.registerListener(this, stepDetector, SensorManager.SENSOR_DELAY_NORMAL);
 
         //Vibrator
         Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -141,6 +129,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         legMechanicMonitor = new LegMechanicMonitor();
 
+        stepCounterHandler = new StepCounterHandler(legMechanicMonitor, metronomeMonitor, this);
+        stepCounterHandler.start();
+
         MetronomeThread metronomeThread = new MetronomeThread(metronomeMonitor, vib, sound, cameraManager, this);
         metronomeThread.start();
     }
@@ -150,20 +141,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         myChoice = Choice.VIBRATION;
         metronomeMonitor.setChoice(myChoice);
 
-        vibButton.setImageResource(R.drawable.vibration2);
-        lightButton.setImageResource(R.drawable.nolight);
-        soundButton.setImageResource(R.drawable.nosound);
-
-        //vibButton.setImageResource(R.drawable.light);
+        vibButton.setImageResource(R.drawable.navbar_vib2_activated);
+        lightButton.setImageResource(R.drawable.navbar_torch2);
+        soundButton.setImageResource(R.drawable.navbar_sound);
     }
 
     public void setToLight(View view){
         myChoice = Choice.LIGHT;
         metronomeMonitor.setChoice(myChoice);
 
-        vibButton.setImageResource(R.drawable.novibration);
-        lightButton.setImageResource(R.drawable.light2);
-        soundButton.setImageResource(R.drawable.nosound);
+        vibButton.setImageResource(R.drawable.navbar_vib2);
+        lightButton.setImageResource(R.drawable.navbar_torch2_activated);
+        soundButton.setImageResource(R.drawable.navbar_sound);
 
     }
 
@@ -171,9 +160,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         myChoice = Choice.SOUND;
         metronomeMonitor.setChoice(myChoice);
 
-        vibButton.setImageResource(R.drawable.novibration);
-        lightButton.setImageResource(R.drawable.nolight);
-        soundButton.setImageResource(R.drawable.sound2);
+        vibButton.setImageResource(R.drawable.navbar_vib2);
+        lightButton.setImageResource(R.drawable.navbar_torch2);
+        soundButton.setImageResource(R.drawable.navbar_sound_activated);
 
     }
 
@@ -185,70 +174,55 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         if(flag) {
-            bpmButton.setImageResource(R.drawable.knobon);
+            bpmButton.setImageResource(R.drawable.pause);
             metronomeMonitor.setChoice(myChoice);
             metronomeMonitor.setBool();
             metronomeMonitor.start();
         } else {
-            bpmButton.setImageResource(R.drawable.knoboff);
+            bpmButton.setImageResource(R.drawable.play);
             metronomeMonitor.stop();
         }
     }
 
     public void increase(View view){
+        incButton.setImageResource(R.drawable.plus_orange);
         bpm++;
         BPMText.setText(Integer.toString(bpm));
         metronomeMonitor.setBPM(bpm);
+        incButton.setImageResource(R.drawable.plus_blue);
 
     }
 
     public void decrease(View view){
+        decButton.setImageResource(R.drawable.minus_orange);
         bpm--;
         BPMText.setText(Integer.toString(bpm));
         metronomeMonitor.setBPM(bpm);
+        decButton.setImageResource(R.drawable.minus_blue);
     }
 
-
-    public void onLegClick(View view) {
-        Intent intent = new Intent(this, LegMechanicActivity.class);
-        startActivity(intent);
-    }
 
     //compass parts begin ----------------------------------------------
     public void onCompassClicked(View view){
 
         if (!compassChecked){
-            //cl.setAlpha(0.1f);
+            incButton.setVisibility(View.GONE);
+            decButton.setVisibility(View.GONE);
+            arrows.setVisibility(View.VISIBLE);
             compassChecked = true;
-            compassButton.setImageResource(R.drawable.rotate_highlight);
+            rotateButton.setImageResource(R.drawable.rotate_activated);
             start();
 
         }else{
-            //cl.setAlpha(1.0f);
+            arrows.setVisibility(View.GONE);
+            incButton.setVisibility(View.VISIBLE);
+            decButton.setVisibility(View.VISIBLE);
             compassChecked = false;
             stop();
             pastDeg = 0;
-            compassButton.setImageResource(R.drawable.rotate);
+            rotateButton.setImageResource(R.drawable.rotate_unacti);
         }
     }
-    public void onClickQuestion(View view) {
-        Intent intent = new Intent(this, proxTest.class);
-        startActivity(intent);
-    }
-
-    public void onToggleButtonClicked(View v) {
-        //Check, is the toggle is on?
-        boolean on = ((ToggleButton) v).isChecked();
-
-        if (on) {
-            start();
-        }else{
-            stop();
-            pastDeg = 0;
-        }
-    }
-
-
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -272,7 +246,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if (pastDeg != 0) {
             int diff = deg - pastDeg;
-            bpm += diff;
+            if(bpm + diff < 0){
+                bpm = 0;
+            } else {
+                bpm += diff;
+            }
             BPMText.setText(Integer.toString(bpm));
             metronomeMonitor.setBPM(bpm);
 
@@ -282,27 +260,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // proximity code ------------------------------------------------------------
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
             if (event.values[0] == 0) {
-                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                        metronomeMonitor.setChoice(Choice.LIGHT);
-                try {
-                    String cameraId = cameraManager.getCameraIdList()[0];
-                    //cameraManager.setTorchMode(cameraId, true);
-                } catch (CameraAccessException e) {
-                }
-
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             } else {
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
                 metronomeMonitor.setChoice(myChoice);
-
-                try {
-                    String cameraId = cameraManager.getCameraIdList()[0];
-                    //cameraManager.setTorchMode(cameraId, false);
-                } catch (CameraAccessException e) {
-                }
-
             }
+        }
+
+        if(event.sensor.getType() == Sensor.TYPE_STEP_DETECTOR){
+            if(event.values[0] == 1.0) legMechanicMonitor.incStep();
         }
 
     }
@@ -351,11 +317,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-
 //compass parts end ---------------------------------------------
 
     public void pocketModeButton(View view){
-        legMechanicMonitor.press();
+        if(!isClicked){
+            isClicked = true;
+            overlay.setVisibility(View.VISIBLE);
+            legMechanicMonitor.press();
+            legMechanicMonitor.startLeg();
+        } else {
+            isClicked = false;
+            overlay.setVisibility(View.GONE);
+        }
     }
-
 }

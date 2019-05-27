@@ -1,4 +1,10 @@
+/*
+
+
+NOT IN USE
+
 package com.example.haponom;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -63,7 +69,7 @@ public class LegMechanicActivity extends AppCompatActivity implements SensorEven
         metronomeMonitor = new MetronomeMonitor();
 
 
-        sch = new StepCounterHandler(monitor, metronomeMonitor, this);
+        sch = new StepCounterHandler(monitor, metronomeMonitor, MainActivity.class);
         metronomeThread = new MetronomeThread(metronomeMonitor, vib, sound, cameraManager, this);
         countdownThread = new CountdownThread(monitor, this);
 
@@ -95,3 +101,4 @@ public class LegMechanicActivity extends AppCompatActivity implements SensorEven
 
     }
 }
+*/

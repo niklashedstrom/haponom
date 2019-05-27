@@ -5,9 +5,7 @@ class MetronomeMonitor {
     private boolean run = false;
     private MainActivity.Choice choice = MainActivity.Choice.VIBRATION;
 
-    public MetronomeMonitor(){
-
-    }
+    public MetronomeMonitor(){}
 
     public synchronized void setBPM(int bpm){
         this.bpm = bpm;
